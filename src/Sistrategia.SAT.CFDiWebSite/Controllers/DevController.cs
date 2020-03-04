@@ -13,7 +13,7 @@ using Sistrategia.SAT.CFDiWebSite.Models;
 
 namespace Sistrategia.SAT.CFDiWebSite.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class DevController : BaseController
     {
         // GET: Dev
@@ -215,10 +215,10 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
             comprobante.TipoDeComprobante = "P";
 
             comprobante.Serie = "CP";
-            comprobante.Folio = "1";
+            comprobante.Folio = "23";
             comprobante.Fecha = DateTime.Now + SATManager.GetCFDIServiceTimeSpan();
 
-            CFDI.Certificado certificado = DBContext.Certificados.Find(3);
+            CFDI.Certificado certificado = DBContext.Certificados.Find(1);
 
             if (certificado != null)
             {
@@ -234,8 +234,10 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
             comprobante.SubTotal = 0m;
             comprobante.Total = 0m;
 
-            CFDI.Receptor receptor = DBContext.Receptores.Find(23);
+            CFDI.Receptor receptor = new Receptor();//DBContext.Receptores.Find(23);
             receptor.UsoCFDI = "P01";
+            receptor.Nombre = "MAPED SILCO SA DE CV";
+            receptor.RFC = "MSI0108101J7";
 
             CFDI.ComprobanteReceptor comprobanteReceptor = DBContext.ComprobantesReceptores.Find(23);
 
@@ -250,9 +252,12 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
             comprobante.Receptor = comprobanteReceptor;
 
-            CFDI.Emisor emisor = DBContext.Emisores.Find(1);
+            CFDI.Emisor emisor = new Emisor();//DBContext.Emisores.Find(1);
+            emisor.RFC = "JEO110617QB7";
+            emisor.Nombre = "JEOCSI SA DE CV";
+            emisor.PublicKey = Guid.NewGuid();
             CFDI.ComprobanteEmisor comprobanteEmisor = null;
-            comprobanteEmisor = DBContext.ComprobantesEmisores.Find(1);
+            //comprobanteEmisor = DBContext.ComprobantesEmisores.Find(1);
 
             List<CFDI.ComprobanteEmisorRegimenFiscal> regimenes = new List<CFDI.ComprobanteEmisorRegimenFiscal>();
 
@@ -273,9 +278,11 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
                     DomicilioFiscal = emisor.DomicilioFiscal,
                     RegimenFiscal = regimenes
                 };
+                comprobanteEmisor.Emisor.RegimenFiscal = new List<RegimenFiscal>();
+                comprobanteEmisor.Emisor.RegimenFiscal.Add(new RegimenFiscal { RegimenFiscalClave = "601" });
 
             }
-            comprobanteEmisor.Emisor.RegimenFiscal[0].RegimenFiscalClave = "601";
+            //comprobanteEmisor.Emisor.RegimenFiscal[0].RegimenFiscalClave = "601";
             comprobante.Emisor = comprobanteEmisor;
 
 
@@ -312,10 +319,10 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
             ComprobantePago comprobantePago = new ComprobantePago();
             comprobantePago.Version = "1.0";
-            comprobantePago.FechaPago = DateTime.Parse("2018-05-14T12:00:00");
+            comprobantePago.FechaPago = DateTime.Parse("2020-02-13T12:00:00");
             comprobantePago.FormaDePagoP = "03";
             comprobantePago.MonedaP = "MXN";
-            comprobantePago.Monto = 100m;
+            comprobantePago.Monto = 13862.00m;
             comprobantePago.Ordinal = 1;
 
             //if (!string.IsNullOrEmpty(pago.NumeroOperacion))
@@ -341,18 +348,33 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
             ComprobantePagoDoctoRelacionado docto = new ComprobantePagoDoctoRelacionado();
             docto.ComprobantePagoDoctoRelacionadoId = Guid.NewGuid();
-            docto.IdDocumento = Guid.NewGuid().ToString();
+            docto.IdDocumento = "73384254-0873-4A22-9542-25D3CB1A717B";
             docto.Serie = "A";
-            docto.Folio = "1";
+            docto.Folio = "640";
             docto.MonedaDR = "MXN";
             docto.MetodoDePagoDR = "PPD";
             docto.NumParcialidades = 1;
-            docto.ImpSaldAnt = 100m;
-            docto.ImpPagado = 100m;
-            docto.ImpSaldoInsoluto = 0m;
+            docto.ImpSaldAnt = 13862.00m;
+            docto.ImpPagado = 13862.00m;
+            docto.ImpSaldoInsoluto = 0.00m;
             docto.Ordinal = 1;
 
             comprobantePago.DoctosRelacionados.Add(docto);
+
+            //ComprobantePagoDoctoRelacionado docto2 = new ComprobantePagoDoctoRelacionado();
+            //docto2.ComprobantePagoDoctoRelacionadoId = Guid.NewGuid();
+            //docto2.IdDocumento = "48AE6789-3948-4E6F-9613-10F112023B95";
+            //docto2.Serie = "A";
+            //docto2.Folio = "513";
+            //docto2.MonedaDR = "MXN";
+            //docto2.MetodoDePagoDR = "PPD";
+            //docto2.NumParcialidades = 1;
+            //docto2.ImpSaldAnt = 12760.00m;
+            //docto2.ImpPagado = 12760.00m;
+            //docto2.ImpSaldoInsoluto = 0m;
+            //docto2.Ordinal = 2;
+
+            //comprobantePago.DoctosRelacionados.Add(docto2);
 
             if (comprobante.Complementos == null)
                 comprobante.Complementos = new List<Complemento>();
@@ -374,6 +396,19 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
             string cadenaOriginal = comprobante.GetCadenaOriginal();
             comprobante.Sello = certificado.GetSello(cadenaOriginal);
+
+            string user = "JEO110617QB7";//ConfigurationManager.AppSettings["CfdiServiceUser"];
+            string password = "crvthtbdo";// ConfigurationManager.AppSettings["CfdiServicePassword"];
+
+            string invoiceFileName = DateTime.Now.ToString("yyyyMMddHHmmss_" + comprobante.PublicKey.ToString("N"));
+
+            try {
+                SATManager manager = new SATManager();
+                bool response = manager.GetCFDI(user, password, comprobante);
+            }
+            catch (Exception ex) {
+                //ex.Message;
+            }
 
 
             System.IO.MemoryStream ms = new System.IO.MemoryStream();
@@ -414,8 +449,8 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
             var certificado = DBContext.Certificados.Where(e => e.NumSerie == comprobante.NoCertificado).SingleOrDefault();
 
-            string user = ConfigurationManager.AppSettings["CfdiServiceUser"];
-            string password = ConfigurationManager.AppSettings["CfdiServicePassword"];
+            string user = "JEO110617QB7";//ConfigurationManager.AppSettings["CfdiServiceUser"];
+            string password = "crvthtbdo";// ConfigurationManager.AppSettings["CfdiServicePassword"];
 
             var model = new ComprobanteDetailViewModel(comprobante);
 
@@ -424,8 +459,8 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
             try { 
                 SATManager manager = new SATManager();
                 bool response = manager.GetCFDI(user, password, comprobante);
-                if (response)
-                    DBContext.SaveChanges();
+                //if (response)
+                //    DBContext.SaveChanges();
 
                 return "Ok";
             }

@@ -118,9 +118,9 @@ namespace Sistrategia.SAT.CFDiWebSite
             byte[] responseFileBytes;
 
 
-            CloudStorageAccount account = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["AzureDefaultStorageConnectionString"]);
+            CloudStorageAccount account = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=sistrategiacfdi1;AccountKey=1x+LEeb/yWZ6W4p3cUREnW1EJbkIhO0wvWmQYpMS/K8UaxyMCy2rA7uDR5Bqjt3+tmMP/EJjBfbocrYyNW0eTQ==;BlobEndpoint=https://sistrategiacfdi1.blob.core.windows.net/;TableEndpoint=https://sistrategiacfdi1.table.core.windows.net/;QueueEndpoint=https://sistrategiacfdi1.queue.core.windows.net/;FileEndpoint=https://sistrategiacfdi1.file.core.windows.net/");
             CloudBlobClient client = account.CreateCloudBlobClient();
-            CloudBlobContainer container = client.GetContainerReference(ConfigurationManager.AppSettings["AzureDefaultStorage"]);
+            CloudBlobContainer container = client.GetContainerReference("c4996b494b674a51b59e59f5ec2d95ed");
 
             try {
 
@@ -238,8 +238,8 @@ namespace Sistrategia.SAT.CFDiWebSite
                                  Sistrategia.SAT.CFDiWebSite.CloudStorage.CloudStorageMananger manager = 
                                      new Sistrategia.SAT.CFDiWebSite.CloudStorage.CloudStorageMananger();
                             //manager.UploadFromStream(ConfigurationManager.AppSettings["AzureAccountName"],
-                                manager.UploadFromString(ConfigurationManager.AppSettings["AzureAccountName"],
-                                ConfigurationManager.AppSettings["AzureAccountKey"],
+                                manager.UploadFromString("sistrategiacfdi1",
+                                "1x+LEeb/yWZ6W4p3cUREnW1EJbkIhO0wvWmQYpMS/K8UaxyMCy2rA7uDR5Bqjt3+tmMP/EJjBfbocrYyNW0eTQ==",
                                 comprobante.Emisor.PublicKey.ToString("N"),
                                 comprobante.PublicKey.ToString("N") + ".xml",
                                 comprobante.Serie + comprobante.Folio + ".xml", //model.ComprobanteArchivo.FileName,
@@ -318,6 +318,7 @@ namespace Sistrategia.SAT.CFDiWebSite
     {
 
         internal static ICFDIService Create() {
+            return new CFDI.EDICOM.CFDiService();
             switch (ConfigurationManager.AppSettings["cfdiService"]) {
                 case "CFDI.EDICOM.CFDiService":
                     return new CFDI.EDICOM.CFDiService();

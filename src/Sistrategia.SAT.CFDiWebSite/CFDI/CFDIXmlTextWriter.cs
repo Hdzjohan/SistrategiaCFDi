@@ -1502,7 +1502,7 @@ namespace Sistrategia.SAT.CFDiWebSite.CFDI
 
                             writer.WriteAttributeString("MonedaP", pago.MonedaP);
 
-                            writer.WriteAttributeString("Monto", pago.Monto.ToString("0.00"));
+                            writer.WriteAttributeString("Monto", pago.Monto.ToString(new System.Globalization.CultureInfo("es-MX")/* "13862.00"*/));
 
                             if (!string.IsNullOrEmpty(pago.NumOperacion))
                                 writer.WriteAttributeString("NumOperacion", pago.NumOperacion);
@@ -1556,20 +1556,21 @@ namespace Sistrategia.SAT.CFDiWebSite.CFDI
                                 if (docto.NumParcialidades > 0)
                                     writer.WriteAttributeString("NumParcialidad", docto.NumParcialidades.ToString());
 
-                                if (docto.ImpSaldAnt > 0M)
-                                    writer.WriteAttributeString("ImpSaldoAnt", docto.ImpSaldAnt.ToString("0.00"));
+                                if (docto.ImpSaldAnt > 0)
+                                    writer.WriteAttributeString("ImpSaldoAnt", docto.ImpSaldAnt.ToString(new System.Globalization.CultureInfo("es-MX")) /*"27835.36"*/);
 
-                                if (docto.ImpPagado > 0M)
-                                    writer.WriteAttributeString("ImpPagado", docto.ImpPagado.ToString("0.00"));
+                                if (docto.ImpPagado > 0)
+                                    writer.WriteAttributeString("ImpPagado", docto.ImpPagado.ToString(new System.Globalization.CultureInfo("es-MX")) /*"27835.36"*/);
 
-                                if (docto.ImpPagado > 0M && docto.ImpSaldAnt > 0M)
-                                    if (docto.ImpSaldoInsoluto == 0M)
-                                        writer.WriteAttributeString("ImpSaldoInsoluto", docto.ImpSaldoInsoluto.ToString("0"));
+                                if (docto.ImpPagado > 0 && docto.ImpSaldAnt > 0)
+                                    if (docto.ImpSaldoInsoluto == 0)
+                                        writer.WriteAttributeString("ImpSaldoInsoluto", docto.ImpSaldoInsoluto.ToString(new System.Globalization.CultureInfo("es-MX")));
                                     else
-                                        writer.WriteAttributeString("ImpSaldoInsoluto", docto.ImpSaldoInsoluto.ToString("0.00"));
+                                        writer.WriteAttributeString("ImpSaldoInsoluto", docto.ImpSaldoInsoluto.ToString(new System.Globalization.CultureInfo("es-MX")));
 
                                 writer.WriteEndElement();// Cierre de docto Relacionado
                             }
+
                             writer.WriteEndElement();// Cierre de pago
                         //}
 

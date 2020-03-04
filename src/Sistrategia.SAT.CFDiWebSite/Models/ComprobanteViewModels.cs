@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using System.Configuration;
 using System.Web;
 using System.Linq;
+using MessagingToolkit.QRCode.Codec;
+using System.Drawing;
 
 namespace Sistrategia.SAT.CFDiWebSite.Models
 {
@@ -612,92 +614,148 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
     #region ComprobanteHtmlViewModel
     public class ComprobanteHtmlViewModel
     {
-        public ComprobanteHtmlViewModel(Comprobante comprobante) {
+        public ComprobanteHtmlViewModel(/*Comprobante comprobante*/) {
 
             this.Traslados = new List<ComprobanteImpuestoTrasladoTotalPorTipoViewModel>();
 
-            if (comprobante == null)
-                throw new ArgumentNullException("comprobante");
+            //if (comprobante == null)
+            //    throw new ArgumentNullException("comprobante");
 
-            if (comprobante.Emisor != null) {
-                this.Emisor = new ComprobanteEmisorDetailViewModel(comprobante.Emisor);
-            }
+            //if (comprobante.Emisor != null) {
+            //    this.Emisor = new ComprobanteEmisorDetailViewModel(comprobante.Emisor);
+            //}
 
-            if (comprobante.Receptor != null) {
-                this.Receptor = new ComprobanteReceptorDetailsViewModel(comprobante.Receptor);
-            }
+            this.Emisor = new ComprobanteEmisorDetailViewModel();
+            this.Emisor.RFC = "JEO110617QB7";
+            this.Emisor.Nombre = "JEOCSI SA DE CV";
 
-            if (comprobante.Conceptos != null && comprobante.Conceptos.Count > 0) {
-                this.Conceptos = new List<ConceptoViewModel>();
-                foreach (Concepto concepto in comprobante.Conceptos) {
-                    this.Conceptos.Add(new ConceptoViewModel(concepto));
-                }
-            }
+            //if (comprobante.Receptor != null) {
+            //    this.Receptor = new ComprobanteReceptorDetailsViewModel(comprobante.Receptor);
+            //}
 
-            if (comprobante.Impuestos.Traslados != null && comprobante.Impuestos.Traslados.Count > 0) {
-                this.Traslados = comprobante.Impuestos.Traslados
-                    .GroupBy(traslado => new { traslado.Impuesto, traslado.Tasa })
-                    .OrderByDescending(traslado => traslado.First().Impuesto)
-                    .ThenBy(traslado => traslado.First().Tasa)
-                    .Select(trasladoGrouped =>
-                        new ComprobanteImpuestoTrasladoTotalPorTipoViewModel() {
-                            Tasa = String.Format("{0}% {1}", (int)trasladoGrouped.First().Tasa, trasladoGrouped.First().Impuesto),
-                            Importe = String.Format("{0:C2}", trasladoGrouped.Sum(t => t.Importe))
-                        }
-                    ).ToList();
-            }
+            //if (comprobante.Conceptos != null && comprobante.Conceptos.Count > 0) {
+            //    this.Conceptos = new List<ConceptoViewModel>();
+            //    foreach (Concepto concepto in comprobante.Conceptos) {
+            //        this.Conceptos.Add(new ConceptoViewModel(concepto));
+            //    }
+            //}
 
-            this.PublicKey = comprobante.PublicKey;
-            this.TipoDeComprobante = comprobante.TipoDeComprobante;
-            this.Fecha = comprobante.Fecha.ToString("dd/MM/yyyy HH:mm:ss");
-            this.Serie = comprobante.Serie;
-            this.Folio = comprobante.Folio;
+            //if (comprobante.Impuestos.Traslados != null && comprobante.Impuestos.Traslados.Count > 0) {
+            //    this.Traslados = comprobante.Impuestos.Traslados
+            //        .GroupBy(traslado => new { traslado.Impuesto, traslado.Tasa })
+            //        .OrderByDescending(traslado => traslado.First().Impuesto)
+            //        .ThenBy(traslado => traslado.First().Tasa)
+            //        .Select(trasladoGrouped =>
+            //            new ComprobanteImpuestoTrasladoTotalPorTipoViewModel() {
+            //                Tasa = String.Format("{0}% {1}", (int)trasladoGrouped.First().Tasa, trasladoGrouped.First().Impuesto),
+            //                Importe = String.Format("{0:C2}", trasladoGrouped.Sum(t => t.Importe))
+            //            }
+            //        ).ToList();
+            //}
+
+            //this.PublicKey = comprobante.PublicKey;
+            this.TipoDeComprobante = "PAGO";// comprobante.TipoDeComprobante;
+            this.Fecha = "2020-02-24T10:40:44";// comprobante.Fecha.ToString("dd/MM/yyyy HH:mm:ss");
+            this.Serie = "CP";// comprobante.Serie;
+            this.Folio = "23";// comprobante.Folio;
 
 
 
             //this.FolioFiscal = comprobante.
 
-            this.SubTotal = comprobante.SubTotal;
-            if (comprobante.Impuestos != null && comprobante.Impuestos.TotalImpuestosTrasladados.HasValue)
-                this.IVA = comprobante.Impuestos.TotalImpuestosTrasladados.Value;
-            this.Total = comprobante.Total;
+            this.SubTotal = 0;// comprobante.SubTotal;
+            //if (comprobante.Impuestos != null && comprobante.Impuestos.TotalImpuestosTrasladados.HasValue)
+            //    this.IVA = comprobante.Impuestos.TotalImpuestosTrasladados.Value;
+            this.Total = 0;// comprobante.Total;
 
             CantidadEnLetraConverter letraConverter = new CantidadEnLetraConverter();
-            letraConverter.Numero = comprobante.Total;
+            letraConverter.Numero = 13862.00M;// comprobante.Total;
             this.TotalLetra = letraConverter.letra();
 
-            this.MetodoDePago = comprobante.MetodoDePago;
-            this.NumCuenta = comprobante.NumCtaPago;
+            //this.MetodoDePago = ""; comprobante.MetodoDePago;
+            //this.NumCuenta = comprobante.NumCtaPago;
 
             this.MainCss = ConfigurationManager.AppSettings["InvoiceMainCss"];
             this.PrintCss = ConfigurationManager.AppSettings["InvoicePrintCss"];
 
-            this.EmisorLogoUrl = comprobante.Emisor.LogoUrl;
-            this.EmisorTelefono = comprobante.Emisor.Telefono;
-            this.EmisorCorreo = comprobante.Emisor.Correo;
-            this.EmisorCifUrl = comprobante.Emisor.CifUrl;
+            this.EmisorLogoUrl = "https://sistrategiadrive.blob.core.windows.net/wwwroot/f71e426b086e4af1a3ec52786f336f85.gif";//comprobante.Emisor.LogoUrl;
+            this.EmisorTelefono = "+52 (777) 3720771";// comprobante.Emisor.Telefono;
+            this.EmisorCorreo = "contact@sistrategia.com";// comprobante.Emisor.Correo;
+            this.EmisorCifUrl = "https://sistrategiadrive.blob.core.windows.net/wwwroot/29b081c4f092449caee2ace161244158.gif";// comprobante.Emisor.CifUrl;
 
-            this.NoOrden = comprobante.ExtendedIntValue1.ToString();
-            this.NoCliente = comprobante.ExtendedIntValue2.ToString();
+            //this.NoOrden = comprobante.ExtendedIntValue1.ToString();
+            //this.NoCliente = comprobante.ExtendedIntValue2.ToString();
 
-            this.Notas = comprobante.ExtendedStringValue2;
+            //this.Notas = comprobante.ExtendedStringValue2;
 
             //this.FechaTimbre
             //this.CadenaSAT = comprobante.GetCadenaSAT();
             //this.CBB
             //this.NumSerieSAT
-            this.SelloCFD = comprobante.Sello;
+            this.SelloCFD = "cMfO4NzrnKevsP1/hW309IVCN2MQXJILCUtqxaWZo7/gk5sZQYlauN3/xVuJ5BHvJQqyktFCokXPGGcqinjOIVvKVO+Nm2oIzDqymyyssyeYurlxRv4Z+SqQIvKy0CgyVc5k+GqSK3m5BkIg0aYp5MhPv0bv2elhxmmdjyWkSAMCtR7SkuFvgN9K/2D3DDa3iwHSf/6qwfziZ88c2JZAxQlyDhutrJgnPxQadUM8UKJgDfZIYcY4MNTQfrH0vxch7E5AvENsaQM+4ylTXWu4i4GT9+llz6Y8DQ45JAQ5gQUUy/zwKevryU9u7fWzG/rP+rUsFYccPav5VjmnaaSHHw==";//comprobante.Sello;
             //this.SelloSAT = comprobante.Complementos.
-            foreach (Complemento complemento in comprobante.Complementos) {
-                if (complemento is TimbreFiscalDigital) {
-                    TimbreFiscalDigital timbre = complemento as TimbreFiscalDigital;
-                    this.SelloSAT = timbre.SelloSAT;
-                    this.FechaTimbre = timbre.FechaTimbrado.ToString("dd/MM/yyyy HH:mm:ss");
-                    this.FolioFiscal = timbre.UUID;
-                    this.NumSerieSAT = timbre.NoCertificadoSAT;
-                    this.CadenaSAT = comprobante.GetCadenaSAT();
-                    this.CBB = comprobante.GetQrCode();
-                }
+            //foreach (Complemento complemento in comprobante.Complementos) {
+            //    if (complemento is TimbreFiscalDigital) {
+            //        TimbreFiscalDigital timbre = complemento as TimbreFiscalDigital;
+            this.SelloSAT = "CPa3OY+4+OBEdm1MXfY8gzAGfjk5kWkjEmOpm0K0tAH0k98kC0kD1oK39UDcJS61o1dU9UeNRSFUcuVbDSRe7bsI263ULuNkiHI86nGbmaL0MuWIEMwboVY8z3yanYWVscQ4pFPmprIw9PQV6jp4MvHJZnn5lmqvdbij8XDKCe6AhgsD95qW4t+f6EOt8RYMc6z9bdzUovx+8IxvcUEij+zPzKd/RgAd1wXt4KYner62TGFCSrTLWu5YuIIhzjhcdnh8qPMYT9uYh5s1+zy6Jo6xEkCpFzWmnZ/RfmjhNx3gDU3CDjcdPfQuWR6TuGe7DgzIw6QGxMSV3e4SVhPSVA==";//timbre.SelloSAT;
+            this.FechaTimbre = "2020-02-24T10:53:46";// timbre.FechaTimbrado.ToString("dd/MM/yyyy HH:mm:ss");
+            this.FolioFiscal = "715AB6AC-3E43-47F4-B676-79C7BC0DC001";// timbre.UUID;
+            this.NumSerieSAT = "00001000000404477432";// timbre.NoCertificadoSAT;
+            this.CadenaSAT = "||3.3|CP|23|2020-02-24T10:40:44|00001000000406922495|0|XXX|0|P|62130|JEO110617QB7|JEOCSI SA DE CV|601|MSI0108101J7|MAPED SILCO SA DE CV|P01|84111506|1|ACT|Pago|0|0|1.0|2020-02-13T12:00:00|03|MXN|13862.00|73384254-0873-4A22-9542-25D3CB1A717B|A|640|MXN|PPD|1|13862.00|13862.00|0.00||";// comprobante.GetCadenaSAT();
+            this.CBB = GenerateQrCode();
+                //}
+            //}
+        }
+
+        //public static string GenerateQrCode(string info, int version) {
+        //    try {
+        //        QRCodeEncoder encoder = new QRCodeEncoder();
+        //        encoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.Q;
+        //        encoder.QRCodeScale = 3;  // encoder.QRCodeScale = 2;
+        //        encoder.QRCodeVersion = version;  // encoder.QRCodeVersion = 8;
+        //        encoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+
+        //        Bitmap img = encoder.Encode(info);
+        //        System.IO.MemoryStream ms = new System.IO.MemoryStream();
+        //        img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+        //        byte[] byteImage = ms.ToArray();
+
+        //        //path = "C:\\Code\\QRCodeCreator\\QRCodeCreator\\QRCodeCreator\\img" + DateTime.Now.ToString("d_MM_yy_HH_mm_ss") + ".jpg";
+        //        //img.Save(path, ImageFormat.Jpeg);
+
+        //        string QR_Code = Convert.ToBase64String(byteImage);
+        //        return QR_Code;
+        //    }
+        //    catch (Exception e) {
+        //        return e.Message.ToString();
+        //    }
+        //}
+
+        public string GenerateQrCode() {
+            try {
+
+                string info = @"https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=715AB6AC-3E43-47F4-B676-79C7BC0DC001&re=JEO110617QB7&rr=MSI0108101J7&tt=0&fe=aaSHHw==";// this.Sello.Substring(this.Sello.Length - 8, 8);
+                //string cbb = SATManager.GetQrCode(info);//System.Convert.ToBase64String(toEncodeAsBytes);
+
+                QRCodeEncoder encoder = new QRCodeEncoder();
+                encoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.Q;
+                encoder.QRCodeScale = 3;  // encoder.QRCodeScale = 2;
+                encoder.QRCodeVersion = 0;  // encoder.QRCodeVersion = 8;
+                encoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+
+                Bitmap img = encoder.Encode(info);
+                System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] byteImage = ms.ToArray();
+
+                //path = "C:\\Code\\QRCodeCreator\\QRCodeCreator\\QRCodeCreator\\img" + DateTime.Now.ToString("d_MM_yy_HH_mm_ss") + ".jpg";
+                //img.Save(path, ImageFormat.Jpeg);
+
+                string QR_Code = Convert.ToBase64String(byteImage);
+                return QR_Code;
+            }
+            catch (Exception e) {
+                return e.Message.ToString();
             }
         }
 

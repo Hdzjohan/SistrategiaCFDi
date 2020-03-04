@@ -16,7 +16,7 @@ using System.Data.SqlClient;
 
 namespace Sistrategia.SAT.CFDiWebSite.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ComprobanteController : BaseController
     {
 
@@ -1658,7 +1658,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
             }
             else
             {
-                model = new ComprobanteHtmlViewModel(comprobante);
+                model = new ComprobanteHtmlViewModel(/*comprobante*/);
 
                 TipoMetodoDePago tipoMetodoDePago = new TipoMetodoDePago();
 
@@ -2098,24 +2098,75 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
         #endregion
 
         #region GetPDF
-        public ActionResult GetPDF(string id) {
-            Guid publicKey;
-            if (!Guid.TryParse(id, out publicKey))
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            var comprobante = DBContext.Comprobantes.Where(e => e.PublicKey == publicKey).SingleOrDefault();
 
-            if (comprobante == null)
-                return HttpNotFound();
 
-            string PdfFileName = "";
+        //public ActionResult GetPDF(string id) {
+        //    Guid publicKey;
+        //    if (!Guid.TryParse(id, out publicKey))
+        //        return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 
-            if (comprobante.Serie == null) {
-                PdfFileName = "FACTURA_" + comprobante.Folio.ToString();
-            }
-            else {
-                PdfFileName = "FACTURA_" + comprobante.Folio.ToString() + comprobante.Serie.ToString();
-            }
+        //    var comprobante = DBContext.Comprobantes.Where(e => e.PublicKey == publicKey).SingleOrDefault();
+
+        //    if (comprobante == null)
+        //        return HttpNotFound();
+
+        //    string PdfFileName = "";
+
+        //    if (comprobante.Serie == null) {
+        //        PdfFileName = "FACTURA_" + comprobante.Folio.ToString();
+        //    }
+        //    else {
+        //        PdfFileName = "FACTURA_" + comprobante.Folio.ToString() + comprobante.Serie.ToString();
+        //    }
+        //    PdfFileName = PdfFileName + ".pdf";
+
+        //    try {
+        //        Response.ClearContent();
+        //        Response.ContentType = "application/pdf";
+        //        Response.ContentEncoding = System.Text.Encoding.UTF8;
+        //        InvoicePdfModel pdfGenerator = new InvoicePdfModel();
+        //        //return File(pdfGenerator.CreatePDF(comprobante), "application/pdf", PdfFileName);
+
+        //        ComprobanteHtmlViewModel model = new ComprobanteHtmlViewModel(/*comprobante*/);
+        //        TipoMetodoDePago tipoMetodoDePago = new TipoMetodoDePago();
+
+        //        if (comprobante.Fecha > DateTime.Parse("2016-07-15 00:00:00.000"))
+        //            tipoMetodoDePago = DBContext.TiposMetodoDePago.Where(m => m.TipoMetodoDePagoCode == comprobante.MetodoDePago).SingleOrDefault();
+
+        //        if (tipoMetodoDePago != null) {
+        //            model.MetodoDePagoCode = tipoMetodoDePago.TipoMetodoDePagoCode;
+        //            model.MetodoDePagoDescription = tipoMetodoDePago.TipoMetodoDePagoDescription;
+        //        }
+                
+        //        return File(pdfGenerator.CreatePDF(model), "application/pdf", PdfFileName);
+        //    }
+        //    catch (Exception ex) {
+        //        TempData["msg2"] = ex.Message.ToString();
+        //        return RedirectToAction("Index");
+        //    }
+        //}
+
+
+
+        public ActionResult GetPDF() {
+            //Guid publicKey;
+            //if (!Guid.TryParse(id, out publicKey))
+            //    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            //var comprobante = DBContext.Comprobantes.Where(e => e.PublicKey == publicKey).SingleOrDefault();
+
+            //if (comprobante == null)
+            //    return HttpNotFound();
+
+            string PdfFileName = "FACTURA_CP23";
+
+            //if (comprobante.Serie == null) {
+            //    PdfFileName = "FACTURA_" + comprobante.Folio.ToString();
+            //}
+            //else {
+            //    PdfFileName = "FACTURA_" + comprobante.Folio.ToString() + comprobante.Serie.ToString();
+            //}
             PdfFileName = PdfFileName + ".pdf";
 
             try {
@@ -2125,17 +2176,17 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
                 InvoicePdfModel pdfGenerator = new InvoicePdfModel();
                 //return File(pdfGenerator.CreatePDF(comprobante), "application/pdf", PdfFileName);
 
-                ComprobanteHtmlViewModel model = new ComprobanteHtmlViewModel(comprobante);
-                TipoMetodoDePago tipoMetodoDePago = new TipoMetodoDePago();
+                ComprobanteHtmlViewModel model = new ComprobanteHtmlViewModel(/*comprobante*/);
+                //TipoMetodoDePago tipoMetodoDePago = new TipoMetodoDePago();
 
-                if (comprobante.Fecha > DateTime.Parse("2016-07-15 00:00:00.000"))
-                    tipoMetodoDePago = DBContext.TiposMetodoDePago.Where(m => m.TipoMetodoDePagoCode == comprobante.MetodoDePago).SingleOrDefault();
+                //if (comprobante.Fecha > DateTime.Parse("2016-07-15 00:00:00.000"))
+                //    tipoMetodoDePago = DBContext.TiposMetodoDePago.Where(m => m.TipoMetodoDePagoCode == comprobante.MetodoDePago).SingleOrDefault();
 
-                if (tipoMetodoDePago != null) {
-                    model.MetodoDePagoCode = tipoMetodoDePago.TipoMetodoDePagoCode;
-                    model.MetodoDePagoDescription = tipoMetodoDePago.TipoMetodoDePagoDescription;
-                }
-                
+                //if (tipoMetodoDePago != null) {
+                //    model.MetodoDePagoCode = tipoMetodoDePago.TipoMetodoDePagoCode;
+                //    model.MetodoDePagoDescription = tipoMetodoDePago.TipoMetodoDePagoDescription;
+                //}
+
                 return File(pdfGenerator.CreatePDF(model), "application/pdf", PdfFileName);
             }
             catch (Exception ex) {

@@ -22,7 +22,7 @@ namespace Sistrategia.SAT.CFDiWebSite.CFDI.EDICOM
         public CFDiService() {
             //this.Url = global::TestCFDiClient.Properties.Settings.Default.TestCFDiClient_edicom_CFDiService;
             //this.Url = @"https://cfdiws.sedeb2b.com/EdiwinWS/services/CFDi"; // System.Configuration.AppSettingsSection
-            this.Url = System.Configuration.ConfigurationManager.AppSettings["cfdiRemoteService"].ToString();
+            this.Url = "https://cfdiws.sedeb2b.com/EdiwinWS/services/CFDi";
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

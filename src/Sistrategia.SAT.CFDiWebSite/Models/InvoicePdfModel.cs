@@ -92,7 +92,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 CompanyColonia.Border = 0;
                 TableCompanyData.AddCell(CompanyColonia);
 
-                PdfPCell CompanyCiudad = new PdfPCell(new Phrase(comprobante.Emisor.DomicilioFiscal.Municipio + ", " + comprobante.Emisor.DomicilioFiscal.Estado + ". " + comprobante.Emisor.DomicilioFiscal.Pais , Verdana9));
+                PdfPCell CompanyCiudad = new PdfPCell(new Phrase(comprobante.Emisor.DomicilioFiscal.Municipio + ", " + comprobante.Emisor.DomicilioFiscal.Estado + ". " + comprobante.Emisor.DomicilioFiscal.Pais, Verdana9));
                 CompanyCiudad.Border = 0;
                 TableCompanyData.AddCell(CompanyCiudad);
 
@@ -218,13 +218,13 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 ControlDataInvoice.AddCell(TextMetodoPago);
 
                 if (comprobante.MetodoDePago != null) {
-                                        
+
                     string metodoPago = comprobante.TipoMetodoDePago.TipoMetodoDePagoCode + "-" + comprobante.TipoMetodoDePago.TipoMetodoDePagoDescription;
                     PdfPCell MetodoPago = new PdfPCell(new Phrase(metodoPago, Verdana9));
                     MetodoPago.HorizontalAlignment = Rectangle.ALIGN_CENTER;
                     MetodoPago.Border = 0;
                     ControlDataInvoice.AddCell(MetodoPago);
-                
+
                 }
 
                 if (comprobante.MetodoDePago != null && (comprobante.MetodoDePago.ToString().Equals("02") || comprobante.MetodoDePago.ToString().Equals("04") || comprobante.MetodoDePago.ToString().Equals("28"))) {
@@ -606,7 +606,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
 
 
-                 //CIF empresa en Base64
+                //CIF empresa en Base64
                 Byte[] bytes2 = LoadCIFBase64(comprobante.Emisor.CifUrl);
 
                 Image CIFImage = iTextSharp.text.Image.GetInstance(bytes2);
@@ -675,7 +675,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 string cadenaSAT = comprobante.GetCadenaOriginal(); // .CadenaOriginal;
                 //if (comprobante.Version.Equals("3.2"))
-                    cadenaSAT = comprobante.GetCadenaSAT(); // .CadenaSAT;
+                cadenaSAT = comprobante.GetCadenaSAT(); // .CadenaSAT;
 
                 PdfPCell Cadena = new PdfPCell(new Phrase(cadenaSAT, Verdana5));
                 Cadena.HorizontalAlignment = Rectangle.ALIGN_CENTER;
@@ -807,8 +807,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 string PhraseCertificadoSAT = "";
 
-                if (comprobante.Status.Equals("A"))
-                {
+                if (comprobante.Status.Equals("A")) {
                     foreach (var complemento in comprobante.Complementos) {
                         if (complemento is TimbreFiscalDigital) {
                             TimbreFiscalDigital timbre = (TimbreFiscalDigital)complemento;
@@ -977,7 +976,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 PdfPTable DatosEmisor = new PdfPTable(1);
                 DatosEmisor.DefaultCell.Border = 0;
 
-                PdfPCell CorporateName = new PdfPCell(new Phrase(model.Emisor.Nombre, VerdanaBold9Color));
+                PdfPCell CorporateName = new PdfPCell(new Phrase("JEOCSI SA DE CV", VerdanaBold9Color));
                 //CorporateName.PaddingTop = 20;
                 CorporateName.HorizontalAlignment = Rectangle.ALIGN_CENTER;
                 CorporateName.Border = Rectangle.NO_BORDER;
@@ -991,35 +990,35 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 PdfPTable TableCompanyData = new PdfPTable(1);
 
-                PdfPCell CompanyRFC = new PdfPCell(new Phrase("R.F.C. " + model.Emisor.RFC, Verdana9));
+                PdfPCell CompanyRFC = new PdfPCell(new Phrase("R.F.C. " + "JEO110617QB7" /*model.Emisor.RFC*/, Verdana9));
                 CompanyRFC.Border = 0;
                 TableCompanyData.AddCell(CompanyRFC);
 
-                PdfPCell CompanyCalle = new PdfPCell(new Phrase(model.Emisor.Calle + " # " + model.Emisor.NoExterior, Verdana9));
+                PdfPCell CompanyCalle = new PdfPCell(new Phrase("TABACHIN" /*model.Emisor.Calle*/ + " # 12" /*+ model.Emisor.NoExterior*/, Verdana9));
                 CompanyCalle.Border = 0;
                 TableCompanyData.AddCell(CompanyCalle);
 
-                PdfPCell CompanyColonia = new PdfPCell(new Phrase(model.Emisor.Colonia + ", C.P. " + model.Emisor.CodigoPostal, Verdana9));
+                PdfPCell CompanyColonia = new PdfPCell(new Phrase("BELLA VISTA" /*model.Emisor.Colonia*/ + ", C.P. 62130" /*+ model.Emisor.CodigoPostal*/, Verdana9));
                 CompanyColonia.Border = 0;
                 TableCompanyData.AddCell(CompanyColonia);
 
-                PdfPCell CompanyCiudad = new PdfPCell(new Phrase(model.Emisor.Municipio + ", " + model.Emisor.Estado + ". " + model.Emisor.Pais, Verdana9));
+                PdfPCell CompanyCiudad = new PdfPCell(new Phrase("CUERNAVACA" /*model.Emisor.Municipio*/ + ", MORELOS" + /*model.Emisor.Estado +*/ ". " + "MEXICO"/*model.Emisor.Pais*/, Verdana9));
                 CompanyCiudad.Border = 0;
                 TableCompanyData.AddCell(CompanyCiudad);
 
-                PdfPCell CompanyTelefono = new PdfPCell(new Phrase("TEL. " + model.Emisor.Telefono, Verdana9));
+                PdfPCell CompanyTelefono = new PdfPCell(new Phrase("TEL. " + "+52 (777) 3720771"/*model.Emisor.Telefono*/, Verdana9));
                 CompanyTelefono.Border = 0;
                 TableCompanyData.AddCell(CompanyTelefono);
 
-                PdfPCell CompanyCorreo = new PdfPCell(new Phrase(model.Emisor.Correo, Verdana9));
+                PdfPCell CompanyCorreo = new PdfPCell(new Phrase("contact@sistrategia.com"/*model.Emisor.Correo*/, Verdana9));
                 CompanyCorreo.Border = 0;
                 TableCompanyData.AddCell(CompanyCorreo);
 
                 PdfPCell CompanyRegimen = null;
-                if (model.Emisor.RegimenFiscal != null)
-                    CompanyRegimen = new PdfPCell(new Phrase("Régimen Fiscal: " + model.Emisor.RegimenFiscal, Verdana9));
-                else
-                    CompanyRegimen = new PdfPCell(new Phrase("Régimen Fiscal: ", Verdana9));
+                //if (model.Emisor.RegimenFiscal != null)
+                CompanyRegimen = new PdfPCell(new Phrase("Régimen Fiscal: " + "General de Ley Personas Morales" /*model.Emisor.RegimenFiscal*/, Verdana9));
+                //else
+                //CompanyRegimen = new PdfPCell(new Phrase("Régimen Fiscal: ", Verdana9));
 
                 CompanyRegimen.Border = 0;
                 TableCompanyData.AddCell(CompanyRegimen);
@@ -1068,10 +1067,10 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 TextFolio.HorizontalAlignment = Rectangle.ALIGN_CENTER;
                 TextFolio.Border = 0;
                 ControlDataInvoice.AddCell(TextFolio);
-                
+
                 string PhraseUUID = "";
 
-                if (model.Status.Equals("A")) {                    
+                if (model.Status.Equals("A")) {
                     if (!String.IsNullOrEmpty(model.FolioFiscal)) {
                         PhraseUUID = model.FolioFiscal;
                     }
@@ -1082,63 +1081,58 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 Folio.Border = 0;
                 ControlDataInvoice.AddCell(Folio);
 
-                PdfPCell TextNoOrden = new PdfPCell(new Phrase("No. de Orden", Verdana9));
-                TextNoOrden.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextNoOrden.Border = 0;
-                ControlDataInvoice.AddCell(TextNoOrden);
+                //PdfPCell TextNoOrden = new PdfPCell(new Phrase("No. de Orden", Verdana9));
+                //TextNoOrden.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //TextNoOrden.Border = 0;
+                //ControlDataInvoice.AddCell(TextNoOrden);
 
-                PdfPCell NoOrden = new PdfPCell(new Phrase(model.NoOrden, Verdana9));
-                NoOrden.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                NoOrden.Border = 0;
-                ControlDataInvoice.AddCell(NoOrden);
+                //PdfPCell NoOrden = new PdfPCell(new Phrase(model.NoOrden, Verdana9));
+                //NoOrden.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //NoOrden.Border = 0;
+                //ControlDataInvoice.AddCell(NoOrden);
 
-                PdfPCell TextCliente = new PdfPCell(new Phrase("Cliente", Verdana9));
-                TextCliente.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextCliente.Border = 0;
-                ControlDataInvoice.AddCell(TextCliente);
+                //PdfPCell TextCliente = new PdfPCell(new Phrase("Cliente", Verdana9));
+                //TextCliente.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //TextCliente.Border = 0;
+                //ControlDataInvoice.AddCell(TextCliente);
 
-                PdfPCell Cliente = new PdfPCell(new Phrase(model.NoCliente, Verdana9));
-                Cliente.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Cliente.Border = 0;
-                ControlDataInvoice.AddCell(Cliente);
+                //PdfPCell Cliente = new PdfPCell(new Phrase(model.NoCliente, Verdana9));
+                //Cliente.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //Cliente.Border = 0;
+                //ControlDataInvoice.AddCell(Cliente);
 
-                PdfPCell TextTransporte = new PdfPCell(new Phrase("Transporte", Verdana9));
-                TextTransporte.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextTransporte.Border = 0;
-                ControlDataInvoice.AddCell(TextTransporte);
+                //PdfPCell TextTransporte = new PdfPCell(new Phrase("Transporte", Verdana9));
+                //TextTransporte.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //TextTransporte.Border = 0;
+                //ControlDataInvoice.AddCell(TextTransporte);
 
-                PdfPCell Transporte = new PdfPCell(new Phrase("CLIENTE", Verdana9));
-                Transporte.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Transporte.Border = 0;
-                ControlDataInvoice.AddCell(Transporte);
+                //PdfPCell Transporte = new PdfPCell(new Phrase("CLIENTE", Verdana9));
+                //Transporte.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //Transporte.Border = 0;
+                //ControlDataInvoice.AddCell(Transporte);
 
-                PdfPCell TextMetodoPago = new PdfPCell(new Phrase("Método de Pago", Verdana9));
+                PdfPCell TextMetodoPago = new PdfPCell(new Phrase("Tipo de Comprobante", Verdana9));
                 TextMetodoPago.HorizontalAlignment = Rectangle.ALIGN_CENTER;
                 TextMetodoPago.Border = 0;
                 ControlDataInvoice.AddCell(TextMetodoPago);
 
-                if (model.MetodoDePago != null) {
-                    
-                    PdfPCell MetodoPago = new PdfPCell(new Phrase(model.MetodoDePagoDisplayName, Verdana9));
-                    MetodoPago.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                    MetodoPago.Border = 0;
-                    ControlDataInvoice.AddCell(MetodoPago);
-                
-                }
+                PdfPCell MetodoPago = new PdfPCell(new Phrase("PAGO", Verdana9));
+                MetodoPago.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                MetodoPago.Border = 0;
+                ControlDataInvoice.AddCell(MetodoPago);
 
-                if (model.MetodoDePago != null && (model.MetodoDePago.ToString().Equals("02") || model.MetodoDePago.ToString().Equals("04") || model.MetodoDePago.ToString().Equals("28"))) {
+                PdfPCell TextoLugarExp = new PdfPCell(new Phrase("Lugar de Expedición", Verdana9));
+                TextoLugarExp.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                TextoLugarExp.Border = 0;
+                ControlDataInvoice.AddCell(TextoLugarExp);
 
-                    PdfPCell TextNoCuenta = new PdfPCell(new Phrase("Número de Cuenta", Verdana9));
-                    TextNoCuenta.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                    TextNoCuenta.Border = 0;
-                    ControlDataInvoice.AddCell(TextNoCuenta);
+                PdfPCell LugarExpedición = new PdfPCell(new Phrase("62130", Verdana9));
+                LugarExpedición.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                LugarExpedición.Border = 0;
+                ControlDataInvoice.AddCell(LugarExpedición);
 
-                    PdfPCell Cuenta = new PdfPCell(new Phrase(model.NumCuenta, Verdana9));
-                    Cuenta.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                    Cuenta.Border = 0;
-                    ControlDataInvoice.AddCell(Cuenta);
-                }
 
+               
                 PdfPCell ContentDatosFactura = new PdfPCell(ControlDataInvoice);
                 ContentDatosFactura.BorderColor = new Color(62, 84, 84);
                 ContentDatosFactura.BorderWidth = 2;
@@ -1164,18 +1158,18 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 #region DatosFacturacion
 
-                PdfPTable DatosReceptor = new PdfPTable(3);
+                PdfPTable DatosReceptor = new PdfPTable(1);
                 DatosReceptor.TotalWidth = 507.401574803f;
                 DatosReceptor.LockedWidth = true;
-                float[] WidthsDatosReceptor = new float[] { 250.866141732f, 5.669291339f, 250.866141732f };
+                float[] WidthsDatosReceptor = new float[] { 507.401574803f };
                 DatosReceptor.SetWidths(WidthsDatosReceptor);
 
                 PdfPTable DatosFacturacion = new PdfPTable(2);
                 DatosFacturacion.TotalWidth = 250.866141732f;
-                float[] WidthsDatosFacturacion = new float[] { 70.866141732f, 180f };
+                float[] WidthsDatosFacturacion = new float[] { 70f, 437.401574803f };
                 DatosFacturacion.SetWidths(WidthsDatosFacturacion);
 
-                PdfPCell TextDatosFacturacion = new PdfPCell(new Phrase("Datos de Facturación", VerdanaBold9Color));
+                PdfPCell TextDatosFacturacion = new PdfPCell(new Phrase("Datos de Receptor", VerdanaBold9Color));
                 TextDatosFacturacion.Colspan = 2;
                 TextDatosFacturacion.Border = Rectangle.BOTTOM_BORDER;
                 TextDatosFacturacion.BorderColor = new Color(62, 84, 84);
@@ -1184,92 +1178,38 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 DatosFacturacion.AddCell(TextDatosFacturacion);
 
                 PdfPCell TextoRFC = new PdfPCell(new Phrase("RFC", Verdana9));
-                TextoRFC.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                TextoRFC.HorizontalAlignment = Rectangle.ALIGN_RIGHT;
                 TextoRFC.Border = 0;
                 DatosFacturacion.AddCell(TextoRFC);
 
-                PdfPCell RFC = new PdfPCell(new Phrase(model.Receptor.RFC, Verdana9));
-                RFC.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                PdfPCell RFC = new PdfPCell(new Phrase("MSI0108101J7" /*model.Receptor.RFC*/, Verdana9));
+                RFC.HorizontalAlignment = Rectangle.ALIGN_LEFT;
+                RFC.PaddingLeft = 28.346456693f;
                 RFC.Border = 0;
                 DatosFacturacion.AddCell(RFC);
 
                 PdfPCell TextoNombre = new PdfPCell(new Phrase("Nombre", Verdana9));
-                TextoNombre.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                TextoNombre.HorizontalAlignment = Rectangle.ALIGN_RIGHT;
                 TextoNombre.Border = 0;
                 DatosFacturacion.AddCell(TextoNombre);
 
-                PdfPCell Nombre = new PdfPCell(new Phrase(model.Receptor.Nombre, Verdana9));
+                PdfPCell Nombre = new PdfPCell(new Phrase("MAPED SILCO SA DE CV"/*model.Receptor.Nombre*/, Verdana9));
                 Nombre.Border = 0;
-                Nombre.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                Nombre.HorizontalAlignment = Rectangle.ALIGN_LEFT;
+                Nombre.PaddingLeft = 28.346456693f;
                 DatosFacturacion.AddCell(Nombre);
 
-                PdfPCell TextDireccionFiscal = new PdfPCell(new Phrase("Dirección Fiscal", VerdanaBold9Color));
-                TextDireccionFiscal.Colspan = 2;
-                TextDireccionFiscal.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER;
-                TextDireccionFiscal.BorderColor = new Color(62, 84, 84);
-                TextDireccionFiscal.BorderWidth = 1.3f;
-                TextDireccionFiscal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                DatosFacturacion.AddCell(TextDireccionFiscal);
+                PdfPCell TextoUsoCFDi = new PdfPCell(new Phrase("Uso CFDI", Verdana9));
+                TextoUsoCFDi.HorizontalAlignment = Rectangle.ALIGN_RIGHT;
+                TextoUsoCFDi.Border = 0;
+                DatosFacturacion.AddCell(TextoUsoCFDi);
 
-                PdfPCell TextoCalle = new PdfPCell(new Phrase("Calle", Verdana9));
-                TextoCalle.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoCalle.Border = 0;
-                DatosFacturacion.AddCell(TextoCalle);
+                PdfPCell UsoCFDi = new PdfPCell(new Phrase("POR DEFINIR"/*model.Receptor.Nombre*/, Verdana9));
+                UsoCFDi.Border = 0;
+                UsoCFDi.HorizontalAlignment = Rectangle.ALIGN_LEFT;
+                UsoCFDi.PaddingLeft = 28.346456693f;
+                DatosFacturacion.AddCell(UsoCFDi);
 
-                PdfPCell Calle = new PdfPCell(new Phrase(model.Receptor.Domicilio.Calle + " # " + model.Receptor.Domicilio.NoExterior, Verdana9));
-                Calle.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Calle.Border = 0;
-                DatosFacturacion.AddCell(Calle);
-
-                PdfPCell TextoColonia = new PdfPCell(new Phrase("Colonia", Verdana9));
-                TextoColonia.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoColonia.Border = 0;
-                DatosFacturacion.AddCell(TextoColonia);
-
-                PdfPCell Colonia = new PdfPCell(new Phrase(model.Receptor.Domicilio.Colonia, Verdana9));
-                Colonia.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Colonia.Border = 0;
-                DatosFacturacion.AddCell(Colonia);
-
-                PdfPCell TextoMunicipio = new PdfPCell(new Phrase("Municipio", Verdana9));
-                TextoMunicipio.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoMunicipio.Border = 0;
-                DatosFacturacion.AddCell(TextoMunicipio);
-
-                PdfPCell Municipio = new PdfPCell(new Phrase(model.Receptor.Domicilio.Municipio, Verdana9));
-                Municipio.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Municipio.Border = 0;
-                DatosFacturacion.AddCell(Municipio);
-
-                PdfPCell TextoEstado = new PdfPCell(new Phrase("Estado", Verdana9));
-                TextoEstado.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoEstado.Border = 0;
-                DatosFacturacion.AddCell(TextoEstado);
-
-                PdfPCell Estado = new PdfPCell(new Phrase(model.Receptor.Domicilio.Estado, Verdana9));
-                Estado.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Estado.Border = 0;
-                DatosFacturacion.AddCell(Estado);
-
-                PdfPCell TextoPais = new PdfPCell(new Phrase("País", Verdana9));
-                TextoPais.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoPais.Border = 0;
-                DatosFacturacion.AddCell(TextoPais);
-
-                PdfPCell Pais = new PdfPCell(new Phrase(model.Receptor.Domicilio.Pais, Verdana9));
-                Pais.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Pais.Border = 0;
-                DatosFacturacion.AddCell(Pais);
-
-                PdfPCell TextoCP = new PdfPCell(new Phrase("Código Postal", Verdana9));
-                TextoCP.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoCP.Border = 0;
-                DatosFacturacion.AddCell(TextoCP);
-
-                PdfPCell CP = new PdfPCell(new Phrase("C.P. " + model.Receptor.Domicilio.CodigoPostal, Verdana9));
-                CP.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                CP.Border = 0;
-                DatosFacturacion.AddCell(CP);
 
 
                 PdfPCell CellDatosFacturacion = new PdfPCell(DatosFacturacion);
@@ -1286,88 +1226,6 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 DatosReceptor.AddCell(Espacio);
 
-                PdfPTable DatosDestinatario = new PdfPTable(2);
-                DatosDestinatario.TotalWidth = 250.866141732f;
-                DatosDestinatario.SetWidths(WidthsDatosFacturacion);
-
-                PdfPCell TextDestinatarioHeader = new PdfPCell(new Phrase("Destinatario", VerdanaBold9Color));
-                TextDestinatarioHeader.Colspan = 2;
-                TextDestinatarioHeader.Border = Rectangle.BOTTOM_BORDER;
-                TextDestinatarioHeader.BorderColor = new Color(62, 84, 84);
-                TextDestinatarioHeader.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextDestinatarioHeader.BorderWidth = 1.3f;
-                DatosDestinatario.AddCell(TextDestinatarioHeader);
-
-                PdfPCell TextoDestinatario = new PdfPCell(new Phrase("Destinatario", Verdana9));
-                TextoDestinatario.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoDestinatario.Border = 0;
-                DatosDestinatario.AddCell(TextoDestinatario);
-
-                PdfPCell Destinatario = new PdfPCell(new Phrase(model.Receptor.Nombre, Verdana9));
-                Destinatario.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Destinatario.Border = 0;
-                DatosDestinatario.AddCell(Destinatario);
-
-                PdfPCell TextDireccion = new PdfPCell(new Phrase("Dirección", VerdanaBold9Color));
-                TextDireccion.Colspan = 2;
-                TextDireccion.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER;
-                TextDireccion.BorderColor = new Color(62, 84, 84);
-                TextDireccion.BorderWidth = 1.3f;
-                TextDireccion.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                DatosDestinatario.AddCell(TextDireccion);
-
-                DatosDestinatario.AddCell(TextoCalle);
-
-                PdfPCell CalleDireccion = new PdfPCell(new Phrase(model.Receptor.Domicilio.Calle + " # " + model.Receptor.Domicilio.NoExterior, Verdana9));
-                CalleDireccion.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                CalleDireccion.Border = 0;
-                DatosDestinatario.AddCell(CalleDireccion);
-
-                DatosDestinatario.AddCell(TextoColonia);
-
-                PdfPCell ColoniaDireccion = new PdfPCell(new Phrase(model.Receptor.Domicilio.Colonia, Verdana9));
-                ColoniaDireccion.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                ColoniaDireccion.Border = 0;
-                DatosDestinatario.AddCell(ColoniaDireccion);
-
-                DatosDestinatario.AddCell(TextoMunicipio);
-
-                PdfPCell MunicipioDireccion = new PdfPCell(new Phrase(model.Receptor.Domicilio.Municipio, Verdana9));
-                MunicipioDireccion.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                MunicipioDireccion.Border = 0;
-                DatosDestinatario.AddCell(MunicipioDireccion);
-
-                DatosDestinatario.AddCell(TextoEstado);
-
-                PdfPCell EstadoDireccion = new PdfPCell(new Phrase(model.Receptor.Domicilio.Estado, Verdana9));
-                EstadoDireccion.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                EstadoDireccion.Border = 0;
-                DatosDestinatario.AddCell(EstadoDireccion);
-
-                DatosDestinatario.AddCell(TextoPais);
-
-                PdfPCell PaisDireccion = new PdfPCell(new Phrase(model.Receptor.Domicilio.Pais, Verdana9));
-                PaisDireccion.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                PaisDireccion.Border = 0;
-                DatosDestinatario.AddCell(PaisDireccion);
-
-                DatosDestinatario.AddCell(TextoCP);
-
-                PdfPCell CPDireccion = new PdfPCell(new Phrase("C.P. " + model.Receptor.Domicilio.CodigoPostal, Verdana9));
-                CPDireccion.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                CPDireccion.Border = 0;
-                DatosDestinatario.AddCell(CPDireccion);
-
-
-                PdfPCell CellDatosDestinatario = new PdfPCell(DatosDestinatario);
-                CellDatosDestinatario.BorderColor = new Color(62, 84, 84);
-                CellDatosDestinatario.BorderWidth = 2;
-                CellDatosDestinatario.PaddingRight = 4;
-                CellDatosDestinatario.PaddingLeft = 4;
-                CellDatosDestinatario.PaddingBottom = 4;
-
-                DatosReceptor.AddCell(CellDatosDestinatario);
-
                 MainTable.AddCell(DatosReceptor);
                 #endregion
 
@@ -1377,18 +1235,17 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 MainTable.AddCell(TableDivision);
 
 
-
                 #region Conceptos
                 PdfPTable Conceptos = new PdfPTable(1);
                 Conceptos.TotalWidth = 507.401574803f;
                 Conceptos.LockedWidth = true;
 
-                PdfPTable TableConceptos = new PdfPTable(9);
-                float[] WidhtsTableConceptos = new float[] { 51.023622047f, 2.834645669f, 63.779527559f, 2.834645669f, 246.614173228f, 2.834645669f, 62.362204724f, 2.834645669f, 65.196850394f };
+                PdfPTable TableConceptos = new PdfPTable(7);
+                float[] WidhtsTableConceptos = new float[] { 113.385826772f, 2.834645669f, 170.078740157f, 2.834645669f, 113.385826772f, 2.834645669f, 70.866141732f };
                 TableConceptos.SetWidths(WidhtsTableConceptos);
                 TableConceptos.SplitRows = true;
 
-                PdfPCell TextoCantidad = new PdfPCell(new Phrase("Cantidad", VerdanaBold9Color));
+                PdfPCell TextoCantidad = new PdfPCell(new Phrase("Fecha", VerdanaBold9Color));
                 TextoCantidad.Border = Rectangle.BOTTOM_BORDER;
                 TextoCantidad.BorderWidth = 1.3f;
                 TextoCantidad.BorderColor = new Color(62, 84, 84);
@@ -1400,7 +1257,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 Espacio1.Border = 0;
                 TableConceptos.AddCell(Espacio1);
 
-                PdfPCell TextoClave = new PdfPCell(new Phrase("Clave", VerdanaBold9Color));
+                PdfPCell TextoClave = new PdfPCell(new Phrase("Forma de Pago", VerdanaBold9Color));
                 TextoClave.Border = Rectangle.BOTTOM_BORDER;
                 TextoClave.BorderWidth = 1.3f;
                 TextoClave.BorderColor = new Color(62, 84, 84);
@@ -1410,7 +1267,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 TableConceptos.AddCell(Espacio1);
 
-                PdfPCell TextoDescripción = new PdfPCell(new Phrase("Descripción", VerdanaBold9Color));
+                PdfPCell TextoDescripción = new PdfPCell(new Phrase("Monto", VerdanaBold9Color));
                 TextoDescripción.Border = Rectangle.BOTTOM_BORDER;
                 TextoDescripción.BorderWidth = 1.3f;
                 TextoDescripción.BorderColor = new Color(62, 84, 84);
@@ -1420,71 +1277,241 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 TableConceptos.AddCell(Espacio1);
 
-                PdfPCell TextoPUnitario = new PdfPCell(new Phrase("P. Unitario", VerdanaBold9Color));
+                PdfPCell TextoPUnitario = new PdfPCell(new Phrase("Moneda", VerdanaBold9Color));
                 TextoPUnitario.Border = Rectangle.BOTTOM_BORDER;
                 TextoPUnitario.BorderWidth = 1.3f;
-                TextoPUnitario.BorderColor = new Color(62, 84, 84);
                 TextoPUnitario.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                TextoPUnitario.BorderColor = new Color(62, 84, 84);
                 TextoPUnitario.PaddingBottom = 4;
                 TableConceptos.AddCell(TextoPUnitario);
 
+                //foreach (ConceptoViewModel concepto in model.Conceptos) {
+                PdfPCell conceptoCantidad = new PdfPCell(new Phrase("13/02/2020", Verdana9));
+                conceptoCantidad.HorizontalAlignment = Element.ALIGN_CENTER;
+                conceptoCantidad.Border = 0;
+                TableConceptos.AddCell(conceptoCantidad);
+
                 TableConceptos.AddCell(Espacio1);
 
-                PdfPCell TextoImporte = new PdfPCell(new Phrase("Importe", VerdanaBold9Color));
-                TextoImporte.Border = Rectangle.BOTTOM_BORDER;
-                TextoImporte.BorderWidth = 1.3f;
-                TextoImporte.BorderColor = new Color(62, 84, 84);
-                TextoImporte.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoImporte.PaddingBottom = 4;
-                TableConceptos.AddCell(TextoImporte);
+                PdfPCell conceptoClave = new PdfPCell(new Phrase("03 - Transferencia electrónica de fondos", Verdana9));
+                conceptoClave.HorizontalAlignment = Element.ALIGN_CENTER;
+                conceptoClave.Border = 0;
+                TableConceptos.AddCell(conceptoClave);
+
+                TableConceptos.AddCell(Espacio1);
+
+                PdfPCell conceptoDescripcion = new PdfPCell(new Phrase("$ 13,862.00", Verdana9));
+                conceptoDescripcion.HorizontalAlignment = Element.ALIGN_CENTER;
+                conceptoDescripcion.Border = 0;
+                TableConceptos.AddCell(conceptoDescripcion);
+
+                TableConceptos.AddCell(Espacio1);
+
+                PdfPCell conceptoPUnitario = new PdfPCell(new Phrase("MXN", Verdana9));
+                conceptoPUnitario.HorizontalAlignment = Element.ALIGN_CENTER;
+                conceptoPUnitario.Border = 0;
+                TableConceptos.AddCell(conceptoPUnitario);
 
 
-                foreach (ConceptoViewModel concepto in model.Conceptos) {
-                    PdfPCell conceptoCantidad = new PdfPCell(new Phrase(concepto.Cantidad.ToString("0.00"), Verdana9));
-                    conceptoCantidad.HorizontalAlignment = Element.ALIGN_CENTER;
-                    conceptoCantidad.Border = 0;
-                    TableConceptos.AddCell(conceptoCantidad);
 
-                    TableConceptos.AddCell(Espacio1);
-
-                    PdfPCell conceptoClave = new PdfPCell(new Phrase(concepto.NoIdentificacion, Verdana9));
-                    conceptoClave.HorizontalAlignment = Element.ALIGN_CENTER;
-                    conceptoClave.Border = 0;
-                    TableConceptos.AddCell(conceptoClave);
-
-                    TableConceptos.AddCell(Espacio1);
-
-                    PdfPCell conceptoDescripcion = new PdfPCell(new Phrase(concepto.Descripcion, Verdana9));
-                    conceptoDescripcion.HorizontalAlignment = Element.ALIGN_CENTER;
-                    conceptoDescripcion.Border = 0;
-                    TableConceptos.AddCell(conceptoDescripcion);
-
-                    TableConceptos.AddCell(Espacio1);
-
-                    PdfPCell conceptoPUnitario = new PdfPCell(new Phrase("$" + concepto.ValorUnitario.ToString("#,##0.00"), Verdana9));
-                    conceptoPUnitario.HorizontalAlignment = Element.ALIGN_CENTER;
-                    conceptoPUnitario.Border = 0;
-                    TableConceptos.AddCell(conceptoPUnitario);
-
-
-                    TableConceptos.AddCell(Espacio1);
-
-                    PdfPCell conceptoImporte = new PdfPCell(new Phrase("$" + concepto.Importe.ToString("#,##0.00"), Verdana9));
-                    conceptoImporte.HorizontalAlignment = Element.ALIGN_CENTER;
-                    conceptoImporte.Border = 0;
-                    TableConceptos.AddCell(conceptoImporte);
-                }
+                //}
 
                 PdfPCell CellConceptos = new PdfPCell(TableConceptos);
                 CellConceptos.BorderWidth = 2;
                 CellConceptos.BorderColor = new Color(62, 84, 84);
                 CellConceptos.PaddingRight = 4;
                 CellConceptos.PaddingLeft = 4;
-                CellConceptos.MinimumHeight = 184.251968504f;
+                CellConceptos.MinimumHeight = 56.692913386f;
 
                 Conceptos.AddCell(CellConceptos);
 
                 MainTable.AddCell(Conceptos);
+
+                #endregion
+
+                #region Documentos Relacionados
+
+                PdfPTable Documentos = new PdfPTable(1);
+                Documentos.TotalWidth = 507.401574803f;
+                Documentos.LockedWidth = true;
+                Documentos.DefaultCell.Border = 1;
+
+                PdfPCell DocumentosCell = new PdfPCell(new Phrase("Documentos Relacionados", VerdanaBold9Color));
+                DocumentosCell.Colspan = 2;
+                DocumentosCell.Border = Rectangle.NO_BORDER;
+                DocumentosCell.BorderColor = new Color(62, 84, 84);
+                DocumentosCell.BorderWidth = 1.3f;
+                DocumentosCell.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                Documentos.AddCell(DocumentosCell);
+
+
+                //PdfPTable Conceptos = new PdfPTable(1);
+                //Conceptos.TotalWidth = 507.401574803f;
+                //Conceptos.LockedWidth = true;
+
+                PdfPTable TableDocRelacionados = new PdfPTable(6);
+                float[] TableDocRelacionadosWidths = new float[] { 138.897637795f, 56.692913386f, 56.692913386f, 85.039370079f, 85.039370079f, 85.039370079f };
+                TableDocRelacionados.SetWidths(TableDocRelacionadosWidths);
+                TableDocRelacionados.SplitRows = true;
+
+                PdfPCell FolioFiscal = new PdfPCell(new Phrase("Folio Fiscal", VerdanaBold9Color));
+                FolioFiscal.Border = Rectangle.BOTTOM_BORDER;
+                FolioFiscal.BorderWidth = 1.3f;
+                FolioFiscal.BorderColor = new Color(62, 84, 84);
+                FolioFiscal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                FolioFiscal.PaddingBottom = 4;
+                TableDocRelacionados.AddCell(FolioFiscal);
+
+                //PdfPCell Espacio1 = new PdfPCell();
+                //Espacio1.Border = 0;
+                //TableConceptos.AddCell(Espacio1);
+
+                PdfPCell FolioP = new PdfPCell(new Phrase("Folio", VerdanaBold9Color));
+                FolioP.Border = Rectangle.BOTTOM_BORDER;
+                FolioP.BorderWidth = 1.3f;
+                FolioP.BorderColor = new Color(62, 84, 84);
+                FolioP.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                FolioP.PaddingBottom = 4;
+                TableDocRelacionados.AddCell(FolioP);
+
+                //TableConceptos.AddCell(Espacio1);
+
+                PdfPCell Serie = new PdfPCell(new Phrase("Serie", VerdanaBold9Color));
+                Serie.Border = Rectangle.BOTTOM_BORDER;
+                Serie.BorderWidth = 1.3f;
+                Serie.BorderColor = new Color(62, 84, 84);
+                Serie.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                Serie.PaddingBottom = 4;
+                TableDocRelacionados.AddCell(Serie);
+
+                //TableConceptos.AddCell(Espacio1);
+
+                PdfPCell SaldoAnt = new PdfPCell(new Phrase("Saldo Anterior", VerdanaBold9Color));
+                SaldoAnt.Border = Rectangle.BOTTOM_BORDER;
+                SaldoAnt.BorderWidth = 1.3f;
+                SaldoAnt.BorderColor = new Color(62, 84, 84);
+                SaldoAnt.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                SaldoAnt.PaddingBottom = 4;
+                TableDocRelacionados.AddCell(SaldoAnt);
+
+                PdfPCell ImportePagado = new PdfPCell(new Phrase("Importe Pagado", VerdanaBold9Color));
+                ImportePagado.Border = Rectangle.BOTTOM_BORDER;
+                ImportePagado.BorderWidth = 1.3f;
+                ImportePagado.BorderColor = new Color(62, 84, 84);
+                ImportePagado.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                ImportePagado.PaddingBottom = 4;
+                TableDocRelacionados.AddCell(ImportePagado);
+
+                PdfPCell SaldoInsoluto = new PdfPCell(new Phrase("Saldo Insoluto", VerdanaBold9Color));
+                SaldoInsoluto.Border = Rectangle.BOTTOM_BORDER;
+                SaldoInsoluto.BorderWidth = 1.3f;
+                SaldoInsoluto.BorderColor = new Color(62, 84, 84);
+                SaldoInsoluto.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                SaldoInsoluto.PaddingBottom = 4;
+                TableDocRelacionados.AddCell(SaldoInsoluto);
+
+                ////foreach (ConceptoViewModel concepto in model.Conceptos) {
+                PdfPCell cFoliFiscal = new PdfPCell(new Phrase("73384254-0873-4A22-9542-25D3CB1A717B", Verdana9));
+                cFoliFiscal.HorizontalAlignment = Element.ALIGN_CENTER;
+                cFoliFiscal.Border = 0;
+                TableDocRelacionados.AddCell(cFoliFiscal);
+
+                PdfPCell cFolio = new PdfPCell(new Phrase("640", Verdana9));
+                cFolio.HorizontalAlignment = Element.ALIGN_CENTER;
+                cFolio.Border = 0;
+                TableDocRelacionados.AddCell(cFolio);
+
+                PdfPCell cSerie = new PdfPCell(new Phrase("A", Verdana9));
+                cSerie.HorizontalAlignment = Element.ALIGN_CENTER;
+                cSerie.Border = 0;
+                TableDocRelacionados.AddCell(cSerie);
+
+                PdfPCell cSaldoAnterior = new PdfPCell(new Phrase("$ 13,862.00", Verdana9));
+                cSaldoAnterior.HorizontalAlignment = Element.ALIGN_CENTER;
+                cSaldoAnterior.Border = 0;
+                TableDocRelacionados.AddCell(cSaldoAnterior);
+
+                PdfPCell cImportePagado = new PdfPCell(new Phrase("$ 13,862.00", Verdana9));
+                cImportePagado.HorizontalAlignment = Element.ALIGN_CENTER;
+                cImportePagado.Border = 0;
+                TableDocRelacionados.AddCell(cImportePagado);
+
+                PdfPCell cSaldoInsoluto = new PdfPCell(new Phrase("$ 0.00", Verdana9));
+                cSaldoInsoluto.HorizontalAlignment = Element.ALIGN_CENTER;
+                cSaldoInsoluto.Border = 0;
+                TableDocRelacionados.AddCell(cSaldoInsoluto);
+
+
+                ///********************************/
+
+                //cFoliFiscal = new PdfPCell(new Phrase("48AE6789-3948-4E6F-9613-10F112023B95", Verdana9));
+                //cFoliFiscal.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cFoliFiscal.Border = 0;
+                //TableDocRelacionados.AddCell(cFoliFiscal);
+
+                //cFolio = new PdfPCell(new Phrase("513", Verdana9));
+                //cFolio.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cFolio.Border = 0;
+                //TableDocRelacionados.AddCell(cFolio);
+
+                //cSerie = new PdfPCell(new Phrase("A", Verdana9));
+                //cSerie.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cSerie.Border = 0;
+                //TableDocRelacionados.AddCell(cSerie);
+
+                //cSaldoAnterior = new PdfPCell(new Phrase("$ 12,760.00", Verdana9));
+                //cSaldoAnterior.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cSaldoAnterior.Border = 0;
+                //TableDocRelacionados.AddCell(cSaldoAnterior);
+
+                //cImportePagado = new PdfPCell(new Phrase("$ 12,760.00", Verdana9));
+                //cImportePagado.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cImportePagado.Border = 0;
+                //TableDocRelacionados.AddCell(cImportePagado);
+
+                //cSaldoInsoluto = new PdfPCell(new Phrase("$ 0.00", Verdana9));
+                //cSaldoInsoluto.HorizontalAlignment = Element.ALIGN_CENTER;
+                //cSaldoInsoluto.Border = 0;
+                //TableDocRelacionados.AddCell(cSaldoInsoluto);
+
+                ///********************************/
+
+
+                //TableConceptos.AddCell(Espacio1);
+
+                //PdfPCell conceptoClave = new PdfPCell(new Phrase("03 - Transferencia electrónica de fondos", Verdana9));
+                //conceptoClave.HorizontalAlignment = Element.ALIGN_CENTER;
+                //conceptoClave.Border = 0;
+                //TableConceptos.AddCell(conceptoClave);
+
+                //TableConceptos.AddCell(Espacio1);
+
+                //PdfPCell conceptoDescripcion = new PdfPCell(new Phrase("$ 12760.00", Verdana9));
+                //conceptoDescripcion.HorizontalAlignment = Element.ALIGN_CENTER;
+                //conceptoDescripcion.Border = 0;
+                //TableConceptos.AddCell(conceptoDescripcion);
+
+                //TableConceptos.AddCell(Espacio1);
+
+                //PdfPCell conceptoPUnitario = new PdfPCell(new Phrase("MXN", Verdana9));
+                //conceptoPUnitario.HorizontalAlignment = Element.ALIGN_CENTER;
+                //conceptoPUnitario.Border = 0;
+                //TableConceptos.AddCell(conceptoPUnitario);
+
+
+
+                ////}
+
+                PdfPCell CellRelacionados = new PdfPCell(TableDocRelacionados);
+                CellRelacionados.BorderWidth = 2;
+                CellRelacionados.BorderColor = new Color(62, 84, 84);
+                CellRelacionados.PaddingRight = 4;
+                CellRelacionados.PaddingLeft = 4;
+                CellRelacionados.MinimumHeight = 56.692913386f;
+
+                Documentos.AddCell(CellRelacionados);
+
+                MainTable.AddCell(Documentos);
 
                 #endregion
 
@@ -1505,8 +1532,8 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
 
 
-                 //CIF empresa en Base64
-                Byte[] bytes2 = LoadCIFBase64(model.Emisor.CifUrl);
+                //CIF empresa en Base64
+                Byte[] bytes2 = LoadCIFBase64("https://sistrategiadrive.blob.core.windows.net/wwwroot/29b081c4f092449caee2ace161244158.gif");
 
                 Image CIFImage = iTextSharp.text.Image.GetInstance(bytes2);
                 CIFImage.ScaleAbsoluteWidth(76.535433071f);
@@ -1539,7 +1566,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
 
                 string PhraseFechaCertificacion = "";
-                if (model.Status.Equals("A")) {                    
+                if (model.Status.Equals("A")) {
                     PhraseFechaCertificacion = model.FechaTimbre;
                 }
 
@@ -1561,7 +1588,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 CadenaSAT.BorderColor = new Color(62, 84, 84);
                 CadenaSAT.BorderWidth = 1.3f;
                 TableCertificacion.AddCell(CadenaSAT);
-                                
+
                 //if (comprobante.Version.Equals("3.2"))
                 string cadenaSAT = model.CadenaSAT;
 
@@ -1589,49 +1616,49 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
                 float[] WidthsFooterTopRight = new float[] { 53.858267717f, 167.244094488f };
                 FooterTopRight.SetWidths(WidthsFooterTopRight);
 
-                PdfPCell TextoSubtotal = new PdfPCell(new Phrase("Subtotal", Verdana9));
-                TextoSubtotal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoSubtotal.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
-                TextoSubtotal.Border = 0;
-                FooterTopRight.AddCell(TextoSubtotal);
+                //PdfPCell TextoSubtotal = new PdfPCell(new Phrase("Subtotal", Verdana9));
+                //TextoSubtotal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //TextoSubtotal.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
+                //TextoSubtotal.Border = 0;
+                //FooterTopRight.AddCell(TextoSubtotal);
 
-                PdfPCell Subtotal = new PdfPCell(new Phrase("$" + model.SubTotal.ToString("#,##0.00"), Verdana9));
-                Subtotal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Subtotal.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
-                Subtotal.Border = 0;
-                FooterTopRight.AddCell(Subtotal);
+                //PdfPCell Subtotal = new PdfPCell(new Phrase("$" + model.SubTotal.ToString("#,##0.00"), Verdana9));
+                //Subtotal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //Subtotal.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
+                //Subtotal.Border = 0;
+                //FooterTopRight.AddCell(Subtotal);
 
-                PdfPCell TextoIVA = new PdfPCell(new Phrase("16 % IVA", Verdana9));
-                TextoIVA.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoIVA.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
-                TextoIVA.Border = 0;
-                FooterTopRight.AddCell(TextoIVA);
+                //PdfPCell TextoIVA = new PdfPCell(new Phrase("16 % IVA", Verdana9));
+                //TextoIVA.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //TextoIVA.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
+                //TextoIVA.Border = 0;
+                //FooterTopRight.AddCell(TextoIVA);
 
-                PdfPCell IVA = new PdfPCell(new Phrase("$" + model.IVA.ToString("#,##0.00"), Verdana9));
-                IVA.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                IVA.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
-                IVA.Border = 0;
-                FooterTopRight.AddCell(IVA);
+                //PdfPCell IVA = new PdfPCell(new Phrase("$" + model.IVA.ToString("#,##0.00"), Verdana9));
+                //IVA.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //IVA.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
+                //IVA.Border = 0;
+                //FooterTopRight.AddCell(IVA);
 
-                PdfPCell TextoTotal = new PdfPCell(new Phrase("Total", Verdana9));
-                TextoTotal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                TextoTotal.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
-                TextoTotal.Border = 0;
-                FooterTopRight.AddCell(TextoTotal);
+                //PdfPCell TextoTotal = new PdfPCell(new Phrase("Total", Verdana9));
+                //TextoTotal.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //TextoTotal.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
+                //TextoTotal.Border = 0;
+                //FooterTopRight.AddCell(TextoTotal);
 
-                PdfPCell Total = new PdfPCell(new Phrase("$" + model.Total.ToString("#,##0.00"), Verdana9));
-                Total.HorizontalAlignment = Rectangle.ALIGN_CENTER;
-                Total.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
-                Total.Border = 0;
-                FooterTopRight.AddCell(Total);
+                //PdfPCell Total = new PdfPCell(new Phrase("$" + model.Total.ToString("#,##0.00"), Verdana9));
+                //Total.HorizontalAlignment = Rectangle.ALIGN_CENTER;
+                //Total.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
+                //Total.Border = 0;
+                //FooterTopRight.AddCell(Total);
 
                 PdfPTable TableTotalLetra = new PdfPTable(2);
-                                
+
                 PdfPCell CellTableLetra = new PdfPCell(new Phrase(model.TotalLetra + "  M.N", VerdanaBold7Color));
                 CellTableLetra.Colspan = 2;
                 CellTableLetra.HorizontalAlignment = Rectangle.ALIGN_CENTER;
                 CellTableLetra.VerticalAlignment = Rectangle.ALIGN_MIDDLE;
-                CellTableLetra.Border = Rectangle.TOP_BORDER;
+                CellTableLetra.Border = Rectangle.NO_BORDER;
                 CellTableLetra.BorderColor = new Color(62, 84, 84);
                 CellTableLetra.BorderWidth = 1.3f;
                 TableTotalLetra.AddCell(CellTableLetra);
@@ -1690,8 +1717,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
                 string PhraseCertificadoSAT = "";
 
-                if (model.Status.Equals("A"))
-                {                    
+                if (model.Status.Equals("A")) {
                     if (!String.IsNullOrEmpty(model.NumSerieSAT)) {
                         PhraseCertificadoSAT = model.NumSerieSAT;
                     }
@@ -1815,7 +1841,7 @@ namespace Sistrategia.SAT.CFDiWebSite.Models
 
             return new System.Net.WebClient().DownloadData(url);
         }
-       
+
         private byte[] LoadCIFBase64(string url) {
             return new System.Net.WebClient().DownloadData(url);
         }
