@@ -1528,6 +1528,8 @@ namespace Sistrategia.SAT.CFDiWebSite.Controllers
 
         [HttpPost]
         public ActionResult GetTimbre(string id, FormCollection formCollection) {
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
             //public ActionResult GetTimbre(string id, ComprobanteDetailViewModel model) {
             //public ActionResult GetTimbre(ComprobanteDetailViewModel model) {
             Guid publicKey;
